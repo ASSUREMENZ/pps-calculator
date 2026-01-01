@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap');
-        body { font-family: 'Noto Sans SC', sans-serif; scroll-behavior: smooth; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Inter:wght@300;400;700&display=swap');
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; scroll-behavior: smooth; }
         .pps-navy { color: #1A2B48; }
         .bg-pps-navy { background-color: #1A2B48; }
         .pps-gold { color: #C5A059; }
@@ -18,9 +18,9 @@
         .border-pps-gold { border-color: #C5A059; }
         .hero-gradient { background: linear-gradient(135deg, #1A2B48 0%, #2A3B58 100%); }
         .tab-active { border-bottom: 3px solid #C5A059; color: #C5A059; font-weight: bold; }
+        .lang-btn { transition: all 0.3s ease; }
+        .lang-btn:hover { color: #C5A059; }
         .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -32,118 +32,113 @@
                 <div class="w-10 h-10 bg-pps-gold rounded-full flex items-center justify-center">
                     <i class="fas fa-shield-halved text-pps-navy text-xl"></i>
                 </div>
-                <div>
+                <div class="hidden sm:block">
                     <span class="text-xl font-bold tracking-wider block leading-none">PPS MUTUAL</span>
-                    <span class="text-[10px] pps-gold tracking-tighter uppercase">Professional Provident Society</span>
+                    <span class="text-[10px] pps-gold tracking-tighter uppercase">For Professionals</span>
                 </div>
             </div>
-            <div class="hidden lg:flex space-x-8 text-sm font-medium uppercase tracking-widest">
-                <a href="#home" class="hover:text-pps-gold transition">首页</a>
-                <a href="#products" class="hover:text-pps-gold transition">专业保障</a>
-                <a href="#psb" class="hover:text-pps-gold transition">利润分享</a>
-                <a href="#eligibility" class="hover:text-pps-gold transition">准入查询</a>
-                <a href="#contact" class="hover:text-pps-gold transition">咨询顾问</a>
+            
+            <div class="hidden lg:flex space-x-8 text-[11px] font-bold uppercase tracking-widest">
+                <a href="#home" data-t="nav_home" class="hover:text-pps-gold transition">首页</a>
+                <a href="#products" data-t="nav_products" class="hover:text-pps-gold transition">专业保障</a>
+                <a href="#psb" data-t="nav_psb" class="hover:text-pps-gold transition">利润分享</a>
+                <a href="#eligibility" data-t="nav_eligibility" class="hover:text-pps-gold transition">准入查询</a>
+                <a href="#contact" data-t="nav_contact" class="hover:text-pps-gold transition">联系我们</a>
             </div>
-            <button onclick="scrollToSection('contact')" class="bg-pps-gold hover:bg-yellow-600 text-pps-navy px-6 py-2 rounded-full text-sm font-bold transition transform hover:scale-105">
-                立即咨询
-            </button>
+
+            <div class="flex items-center space-x-4">
+                <div class="flex border border-white/20 rounded-lg overflow-hidden text-[10px] font-bold">
+                    <button onclick="setLanguage('zh')" id="lang-zh" class="px-3 py-1 bg-pps-gold text-pps-navy">ZH</button>
+                    <button onclick="setLanguage('en')" id="lang-en" class="px-3 py-1 hover:bg-white/10">EN</button>
+                </div>
+                <button onclick="scrollToSection('contact')" class="bg-white/10 hover:bg-pps-gold hover:text-pps-navy border border-white/20 px-4 py-2 rounded-full text-[10px] font-bold transition">
+                    GET ADVICE
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- 英雄板块 (Brand Identity) -->
+    <!-- 英雄板块 (Hero) -->
     <section id="home" class="hero-gradient pt-48 pb-32 text-white relative overflow-hidden">
         <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center relative z-10">
             <div class="lg:w-3/5 space-y-8">
-                <div class="inline-block px-4 py-1 border border-pps-gold rounded-full text-pps-gold text-xs font-bold tracking-widest">
-                    NEW ZEALAND ONLY MUTUAL FOR PROFESSIONALS
+                <div data-t="hero_badge" class="inline-block px-4 py-1 border border-pps-gold rounded-full text-pps-gold text-[10px] font-bold tracking-widest uppercase">
+                    New Zealand Only Mutual for Professionals
                 </div>
-                <h1 class="text-6xl lg:text-8xl font-bold leading-tight">
+                <h1 id="hero-title" class="text-6xl lg:text-7xl font-bold leading-tight">
                     Mutuality is the <br> <span class="pps-gold">Unique Policy</span>
                 </h1>
-                <p class="text-xl text-slate-300 max-w-2xl leading-relaxed">
-                    在 PPS Mutual，您不仅是客户，更是所有者。我们将成功的利润回馈给专业人士会员，而非外部股东。这是新西兰唯一真正为专业精英打造的互助模型。
+                <p id="hero-desc" class="text-lg text-slate-300 max-w-2xl leading-relaxed">
+                    在 PPS Mutual，您不仅是客户，更是所有者。我们将成功的利润回馈给专业人士会员，而非外部股东。
                 </p>
                 <div class="flex flex-wrap gap-4 pt-4">
-                    <button onclick="scrollToSection('psb')" class="bg-pps-gold text-pps-navy px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-pps-gold/20 transition">
+                    <button onclick="scrollToSection('psb')" data-t="btn_explore" class="bg-pps-gold text-pps-navy px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:shadow-pps-gold/20 transition">
                         探索利润分享
                     </button>
-                    <button onclick="scrollToSection('eligibility')" class="border border-white/30 px-10 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition">
-                        资格快速自测
+                    <button onclick="scrollToSection('eligibility')" data-t="btn_check" class="border border-white/30 px-8 py-4 rounded-xl font-bold hover:bg-white/10 transition">
+                        资格自测
                     </button>
                 </div>
             </div>
             <div class="lg:w-2/5 mt-20 lg:mt-0 relative">
-                <div class="animate-float glass-card p-10 rounded-3xl shadow-2xl relative z-10">
+                <div class="glass-card p-10 rounded-3xl shadow-2xl relative z-10">
                     <div class="flex items-center justify-between mb-8">
-                        <span class="text-pps-gold text-xl font-bold">互助优势</span>
+                        <span data-t="card_title" class="text-pps-gold font-bold">互助优势</span>
                         <i class="fas fa-chart-line text-pps-gold text-2xl"></i>
                     </div>
                     <div class="space-y-6">
                         <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold">
+                            <div class="w-10 h-10 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold flex-shrink-0">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <p class="text-sm">由专业人士会员全资拥有</p>
+                            <p data-t="adv_1" class="text-sm">由专业人士会员全资拥有</p>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold">
+                            <div class="w-10 h-10 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold flex-shrink-0">
                                 <i class="fas fa-hand-holding-dollar"></i>
                             </div>
-                            <p class="text-sm">盈余100%分配至会员账户</p>
+                            <p data-t="adv_2" class="text-sm">盈余100%分配至会员账户</p>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold">
+                            <div class="w-10 h-10 bg-pps-gold/20 rounded-full flex items-center justify-center text-pps-gold flex-shrink-0">
                                 <i class="fas fa-lock"></i>
                             </div>
-                            <p class="text-sm">针对 Occupation Class 1 专属费率</p>
+                            <p data-t="adv_3" class="text-sm">针对专业职位提供专属费率</p>
                         </div>
                     </div>
                 </div>
-                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-pps-gold/10 rounded-full blur-3xl"></div>
             </div>
         </div>
     </section>
 
-    <!-- 交互产品板块 (Core Covers) -->
+    <!-- 产品板块 (Products) -->
     <section id="products" class="py-24 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">专业人士的保障体系</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">针对专业人士独特的职业风险与收入结构，我们提供从家庭保障到业务连续性的全方位覆盖。</p>
+                <h2 data-t="prod_h" class="text-4xl font-bold mb-4">专业保障体系</h2>
+                <p data-t="prod_p" class="text-slate-500 max-w-2xl mx-auto italic">专为解决专业人士复杂需求而设计的现代保障套组</p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-4 mb-12" id="product-tabs">
-                <button onclick="switchProduct('life')" class="px-6 py-3 text-sm font-bold uppercase tracking-widest tab-active" id="btn-life">人寿保障</button>
-                <button onclick="switchProduct('tpd')" class="px-6 py-3 text-sm font-bold uppercase tracking-widest" id="btn-tpd">全残保障</button>
-                <button onclick="switchProduct('income')" class="px-6 py-3 text-sm font-bold uppercase tracking-widest" id="btn-income">收入保障</button>
-                <button onclick="switchProduct('key')" class="px-6 py-3 text-sm font-bold uppercase tracking-widest" id="btn-key">关键人物</button>
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button onclick="switchProduct('life')" id="tab-life" class="px-6 py-2 text-[10px] font-bold uppercase tracking-widest tab-active">LIFE</button>
+                <button onclick="switchProduct('tpd')" id="tab-tpd" class="px-6 py-2 text-[10px] font-bold uppercase tracking-widest">TPD</button>
+                <button onclick="switchProduct('income')" id="tab-income" class="px-6 py-2 text-[10px] font-bold uppercase tracking-widest">INCOME</button>
+                <button onclick="switchProduct('key')" id="tab-key" class="px-6 py-2 text-[10px] font-bold uppercase tracking-widest">KEY PERSON</button>
             </div>
 
-            <div id="product-content" class="bg-slate-50 rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 min-h-[400px]">
-                <!-- 动态内容加载 -->
+            <div id="product-content" class="bg-slate-50 rounded-3xl p-8 lg:p-12 border border-slate-100 min-h-[400px]">
                 <div id="p-content" class="flex flex-col lg:flex-row gap-12">
                     <div class="lg:w-1/2 space-y-6">
-                        <h3 id="p-title" class="text-3xl font-bold text-pps-navy">人寿保障 (Life Cover)</h3>
-                        <p id="p-desc" class="text-slate-600 leading-relaxed text-lg">
-                            为您的家人和事业建立坚实后盾。在身故或诊断出末期疾病时提供一次性赔付，让爱在艰难时刻得以延续。
-                        </p>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white p-4 rounded-xl border-l-4 border-pps-gold shadow-sm">
-                                <h4 class="font-bold text-sm">身故赔付</h4>
-                                <p class="text-xs text-slate-400">一次性发放保额</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-xl border-l-4 border-pps-gold shadow-sm">
-                                <h4 class="font-bold text-sm">末期疾病预付</h4>
-                                <p class="text-xs text-slate-400">确诊后即可申请</p>
-                            </div>
-                        </div>
+                        <h3 id="p-title" class="text-3xl font-bold text-pps-navy">Life Cover</h3>
+                        <p id="p-desc" class="text-slate-600 leading-relaxed text-lg italic">加载中...</p>
+                        <ul id="p-features" class="space-y-3 text-sm">
+                            <!-- JS 填充 -->
+                        </ul>
                     </div>
                     <div class="lg:w-1/2">
-                        <div class="bg-pps-navy text-white p-8 rounded-2xl shadow-xl">
-                            <h4 class="text-pps-gold font-bold mb-4">理赔案例</h4>
-                            <p id="p-case" class="text-sm italic text-slate-300 leading-relaxed">
-                                "Michael 是一位有两个孩子的父亲，不幸因意外去世。人寿保障及时支付了赔偿，让妻子 Sarah 无需担心贷款，能够全心照顾孩子们的心理重建。"
-                            </p>
+                        <div class="bg-pps-navy text-white p-8 rounded-2xl shadow-xl border-t-4 border-pps-gold">
+                            <h4 data-t="case_study" class="text-pps-gold font-bold mb-4 uppercase text-xs tracking-widest">Case Study</h4>
+                            <p id="p-case" class="text-sm italic text-slate-300 leading-relaxed">加载中...</p>
                         </div>
                     </div>
                 </div>
@@ -151,208 +146,256 @@
         </div>
     </section>
 
-    <!-- 利润分享交互模拟器 (PSB Simulator) -->
+    <!-- 利润分享模拟器 (PSB) -->
     <section id="psb" class="py-24 bg-slate-100">
         <div class="container mx-auto px-6">
             <div class="flex flex-col lg:flex-row gap-16 items-center">
                 <div class="lg:w-1/2 space-y-6">
-                    <h2 class="text-4xl font-bold">利润分享账户 (PSB)</h2>
-                    <p class="text-slate-600 leading-relaxed">
-                        这是新西兰唯一的特色：当公司经营获利，盈余会被分配到会员的 PSB 账户。随着持有保单的时间越长，您的账户余额可能不仅能抵消保费，还能成为一笔可观的财富。
-                    </p>
-                    <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <label class="block text-sm font-bold mb-4">月保费估算 (NZD)</label>
-                            <input type="range" id="premiumRange" min="100" max="2000" value="500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C5A059]" oninput="updateChart()">
-                            <div class="flex justify-between mt-2 font-bold text-pps-navy">
-                                <span>$100</span>
-                                <span id="premiumValue" class="pps-gold">$500</span>
-                                <span>$2000+</span>
-                            </div>
+                    <h2 data-t="psb_h" class="text-4xl font-bold">利润分享账户 (PSB)</h2>
+                    <p data-t="psb_p" class="text-slate-600 leading-relaxed italic">这是我们的核心不同之处：当业务成功时，我们将利润通过 PSB 账户分享给会员。</p>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <label data-t="psb_label" class="block text-xs font-bold mb-4 text-slate-400 uppercase">月预计保费 (NZD)</label>
+                        <input type="range" id="premiumRange" min="100" max="2000" value="500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C5A059]" oninput="updateChart()">
+                        <div class="flex justify-between mt-2 font-bold pps-navy">
+                            <span>$100</span>
+                            <span id="premiumValue" class="pps-gold text-2xl">$500</span>
+                            <span>$2000</span>
                         </div>
                     </div>
                 </div>
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
-                        <h4 class="text-center font-bold mb-6">长期增值模拟 (20年预测)</h4>
+                        <h4 data-t="psb_chart_h" class="text-center font-bold mb-6 text-sm text-slate-400 uppercase">20-Year Profit Share Growth Simulation</h4>
                         <canvas id="psbChart" height="250"></canvas>
-                        <p class="text-[10px] text-slate-400 mt-6 italic text-center">注：模拟数据基于历史分红水平，非未来收益保证。</p>
+                        <p data-t="psb_disclaimer" class="text-[9px] text-slate-400 mt-6 italic text-center uppercase">Disclaimer: Based on historical allocations. Not a guarantee of future returns.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 准入查询系统 (Eligibility Filter) -->
+    <!-- 准入查询系统 (Eligibility) -->
     <section id="eligibility" class="py-24 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">加入我们，您符合条件吗？</h2>
-                <p class="text-slate-500">PPS Mutual 仅限 Occupation Class 1 的专业精英</p>
+                <h2 data-t="eli_h" class="text-4xl font-bold mb-4">准入资格查询</h2>
+                <p data-t="eli_p" class="text-slate-500 italic">基于 2025/2026 PPSM 官方指南</p>
             </div>
 
-            <div class="max-w-4xl mx-auto bg-slate-50 p-8 lg:p-12 rounded-3xl border border-slate-200 shadow-sm">
-                <div class="grid md:grid-cols-2 gap-8">
+            <div class="max-w-4xl mx-auto bg-slate-50 p-8 lg:p-12 rounded-3xl border border-slate-200">
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
                     <div class="space-y-4">
-                        <h4 class="font-bold flex items-center">
-                            <span class="w-8 h-8 bg-pps-navy text-white rounded-full flex items-center justify-center text-xs mr-2">1</span>
-                            选择您的专业领域
-                        </h4>
-                        <select id="prof-select" class="w-full p-4 rounded-xl border-slate-200 focus:ring-pps-gold focus:border-pps-gold" onchange="checkStatus()">
-                            <option value="">-- 请选择 --</option>
-                            <option value="med">医疗健康 (医生/牙医/药剂师)</option>
-                            <option value="legal">法律界 (律师/法官)</option>
-                            <option value="fin">财务会计 (CA/CPA)</option>
-                            <option value="eng">工程建筑 (注册工程师/建筑师)</option>
-                            <option value="other">其他四年制学位专业</option>
+                        <h4 data-t="eli_step1" class="font-bold text-xs uppercase text-slate-400">1. 选择您的背景</h4>
+                        <select id="prof-select" class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-pps-gold" onchange="checkStatus()">
+                            <option value="" data-t="opt_none">-- 请选择 --</option>
+                            <option value="med" data-t="opt_med">医疗健康领域</option>
+                            <option value="legal" data-t="opt_leg">法律界人士</option>
+                            <option value="fin" data-t="opt_fin">财务与精算</option>
+                            <option value="eng" data-t="opt_eng">工程与建筑</option>
+                            <option value="other" data-t="opt_uni">四年制学位 (THE 排名院校)</option>
                         </select>
                     </div>
                     <div class="space-y-4">
-                        <h4 class="font-bold flex items-center">
-                            <span class="w-8 h-8 bg-pps-navy text-white rounded-full flex items-center justify-center text-xs mr-2">2</span>
-                            确认居民身份
-                        </h4>
+                        <h4 data-t="eli_step2" class="font-bold text-xs uppercase text-slate-400">2. 居民身份</h4>
                         <div class="flex space-x-4">
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="res" value="yes" checked class="hidden peer" onchange="checkStatus()">
-                                <div class="p-4 border border-slate-200 rounded-xl text-center peer-checked:border-pps-gold peer-checked:bg-pps-gold/5 transition font-bold">是 (Citizen/PR)</div>
+                                <div data-t="opt_yes" class="p-4 border border-slate-200 rounded-xl text-center peer-checked:border-pps-gold peer-checked:bg-pps-gold/5 transition font-bold">是</div>
                             </label>
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="res" value="no" class="hidden peer" onchange="checkStatus()">
-                                <div class="p-4 border border-slate-200 rounded-xl text-center peer-checked:border-red-500 peer-checked:bg-red-50 transition font-bold">否</div>
+                                <div data-t="opt_no" class="p-4 border border-slate-200 rounded-xl text-center peer-checked:border-red-500 peer-checked:bg-red-50 transition font-bold">否</div>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div id="status-box" class="mt-12 p-8 rounded-2xl bg-white border border-dashed border-slate-300 text-center transition-all duration-500">
-                    <div id="status-icon" class="text-4xl mb-4 text-slate-300">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 id="status-title" class="text-xl font-bold mb-2">请完成上方筛选</h3>
-                    <p id="status-text" class="text-sm text-slate-400">我们将根据最新 2026 PPSM 指南为您匹配准入资格。</p>
+                <div id="status-box" class="p-8 rounded-2xl bg-white border border-dashed border-slate-300 text-center transition-all duration-500">
+                    <div id="status-icon" class="text-4xl mb-4 text-slate-200"><i class="fas fa-search"></i></div>
+                    <h3 id="status-title" data-t="eli_init_h" class="text-xl font-bold mb-2">等待查询...</h3>
+                    <p id="status-text" data-t="eli_init_p" class="text-sm text-slate-400 italic">请在上方选择您的职业与身份背景</p>
                 </div>
                 
-                <div class="mt-8 text-center">
-                    <p class="text-xs text-slate-400">
-                        * 学术路径：毕业院校需在 <a href="https://www.timeshighereducation.com/world-university-rankings" class="underline pps-gold" target="_blank text-xs">Times Higher Education</a> 名录中，且修满 4 年全日制课程。
-                    </p>
-                </div>
+                <p data-t="uni_link" class="mt-8 text-[10px] text-slate-400 text-center uppercase">
+                    Check your university on <a href="https://www.timeshighereducation.com/world-university-rankings" class="underline pps-gold" target="_blank">THE World Rankings 2026</a>
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- 联系顾问 -->
+    <!-- 联系区 (Contact) -->
     <section id="contact" class="py-24 hero-gradient text-white">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-6 pps-gold">预约您的专属顾问</h2>
-            <p class="text-slate-300 mb-12 max-w-xl mx-auto">每一个专业人士的职业轨迹都是独特的。让我们为您量身定制一份不仅是保障，更是未来资产的互助计划。</p>
+            <h2 data-t="contact_h" class="text-4xl font-bold mb-12 pps-gold uppercase tracking-tighter">Get Expert Advice</h2>
             
-            <div class="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 max-w-2xl mx-auto">
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <div class="w-32 h-32 rounded-full border-4 border-pps-gold overflow-hidden bg-slate-800">
-                        <div class="w-full h-full flex items-center justify-center">
-                            <i class="fas fa-user-tie text-5xl text-pps-gold"></i>
-                        </div>
-                    </div>
-                    <div class="text-left space-y-2">
-                        <h4 class="text-2xl font-bold">Caroline Liang 梁艳</h4>
-                        <p class="text-pps-gold text-sm font-bold uppercase tracking-widest">PPS Mutual Accredited Adviser</p>
-                        <div class="grid grid-cols-1 gap-2 pt-4 text-sm text-slate-300">
-                            <p><i class="fas fa-envelope mr-2 pps-gold"></i> Caroline.liang@icib.co.nz</p>
-                            <p><i class="fas fa-phone mr-2 pps-gold"></i> 027 543 7888</p>
-                            <p><i class="fab fa-weixin mr-2 pps-gold"></i> NZ0275437888</p>
-                        </div>
+            <div class="bg-white/5 backdrop-blur-md p-8 lg:p-12 rounded-3xl border border-white/10 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div class="w-40 h-40 rounded-full border-4 border-pps-gold overflow-hidden bg-slate-800 flex-shrink-0">
+                    <div class="w-full h-full flex items-center justify-center text-5xl text-pps-gold">
+                        <i class="fas fa-user-tie"></i>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <button class="w-full bg-pps-gold hover:bg-yellow-600 text-pps-navy py-4 rounded-xl font-bold text-lg transition">
-                        发送预约邮件
-                    </button>
+                <div class="text-left space-y-4 flex-grow">
+                    <h4 class="text-3xl font-bold">Caroline Liang 梁艳</h4>
+                    <p class="text-pps-gold font-bold text-xs uppercase tracking-widest">PPS Mutual Accredited Adviser | MBA</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 text-sm text-slate-300 border-t border-white/10 pt-6">
+                        <p><i class="fas fa-envelope mr-3 pps-gold"></i> Caroline.liang@icib.co.nz</p>
+                        <p><i class="fas fa-phone mr-3 pps-gold"></i> +64 27 543 7888</p>
+                        <p><i class="fab fa-weixin mr-3 pps-gold"></i> NZ0275437888</p>
+                        <p><i class="fab fa-linkedin mr-3 pps-gold"></i> CarolineLiang</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-white py-12">
+    <footer class="bg-slate-900 text-white py-12 border-t border-white/5">
         <div class="container mx-auto px-6 text-center">
             <div class="flex justify-center items-center space-x-2 mb-6">
                 <i class="fas fa-shield-halved text-pps-gold"></i>
-                <span class="font-bold">PPS MUTUAL NEW ZEALAND</span>
+                <span class="font-bold tracking-widest text-xs uppercase">PPS Mutual New Zealand</span>
             </div>
-            <p class="text-slate-500 text-xs max-w-2xl mx-auto leading-relaxed">
-                © 2026 PPS Mutual. 本网站内容仅供参考，不构成理财建议。PPS Mutual 已获 FMA 豁免发布某些管理投资产品披露声明。具体保障条款请参阅 Multiple Life Policy 政策文档。
+            <p data-t="footer_legal" class="text-slate-500 text-[10px] max-w-3xl mx-auto leading-relaxed uppercase">
+                © 2026 PPS Mutual. For Accredited Adviser Use Only. Mutuality is the Unique Policy.
             </p>
         </div>
     </footer>
 
     <script>
-        // 自动平滑滚动
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // 产品切换逻辑
-        const productData = {
-            life: {
-                title: "人寿保障 (Life Cover)",
-                desc: "为您的家人和事业建立坚实后盾。在身故或诊断出末期疾病时提供一次性赔付，让爱在艰难时刻得以延续。",
-                case: "Michael 是一位有两个孩子的父亲，不幸因意外去世。人寿保障及时支付了赔偿，让妻子 Sarah 无需支付葬礼和生活费，能够全心照顾孩子们的心理重建。"
+        // --- 翻译数据字典 ---
+        const i18n = {
+            zh: {
+                nav_home: "首页", nav_products: "专业保障", nav_psb: "利润分享", nav_eligibility: "准入查询", nav_contact: "联系我们",
+                hero_badge: "新西兰唯一专业人士互惠组织",
+                hero_title: "互助，是唯一的<br><span class='pps-gold'>核心保单</span>",
+                hero_desc: "在 PPS Mutual，您不仅是客户，更是所有者。我们将成功的利润回馈给专业人士会员，而非外部股东。",
+                btn_explore: "探索利润分享", btn_check: "资格自测",
+                card_title: "互助优势",
+                adv_1: "由专业人士会员全资拥有", adv_2: "盈余100%分配至会员账户", adv_3: "针对专业职位提供专属费率",
+                prod_h: "专业保障体系", prod_p: "专为解决专业精英复杂需求而设计的现代保障套组",
+                case_study: "理赔案例",
+                psb_h: "利润分享账户 (PSB)", psb_p: "这是我们的核心不同之处：当业务成功时，我们将利润通过 PSB 账户分享给会员。持有的时间越长，潜在价值越高。",
+                psb_label: "预计月保费 (NZD)", psb_chart_h: "20年利润分享增值模拟图",
+                psb_disclaimer: "免责声明：基于历史分配率估算，不构成未来收益保证。",
+                eli_h: "准入资格查询", eli_p: "基于 2025/2026 PPSM 官方准入指南",
+                eli_step1: "1. 选择您的专业背景", eli_step2: "2. 居民身份",
+                opt_none: "-- 请选择 --", opt_med: "医疗健康领域 (医生/牙医)", opt_leg: "法律界人士 (律师/法官)", opt_fin: "财务精算 (CA/CPA)", opt_eng: "工程建筑 (注册工程师)", opt_uni: "四年制学位 (THE排名院校)",
+                opt_yes: "是", opt_no: "否",
+                eli_init_h: "等待查询中...", eli_init_p: "请在上方选择您的职业与身份背景",
+                uni_link: "在 THE 2026 排名中查询您的大学",
+                contact_h: "获取专家建议", footer_legal: "© 2026 PPS Mutual. 仅供授权顾问演示使用。互助是唯一的保单。"
             },
-            tpd: {
-                title: "全残保障 (TPD Cover)",
-                desc: "如果不幸因疾病或意外导致永久丧失工作能力，全残保障将提供一次性大额赔付，帮助您清偿房贷、进行家庭无障碍改造或维持生活质量。",
-                case: "Jordan 是一名外科医生，意外导致右手永久功能丧失。PPSM 支付了全残理赔，让他能还清贷款并转型从事医学教育工作，无需担忧经济来源。"
-            },
-            income: {
-                title: "收入保障 (Income Protection)",
-                desc: "您的赚钱能力是最大的资产。当您因病无法工作时，我们提供每月的薪资替代。与 ACC 不同，我们覆盖癌症、心脏病等疾病引起的停工。",
-                case: "一名会计师因长期抑郁无法正常处理业务，PPSM 的收入保障每月支付其 75% 的薪资，直到其康复返岗，确保了家庭生活的稳定。"
-            },
-            key: {
-                title: "关键人物保障 (Key Person)",
-                desc: "保障企业的生命线。如果企业核心成员因病缺席，该保险支付招聘成本、工资及业务损失，确保企业在领导层缺位时依然能够存续。",
-                case: "一家设计公司的合伙人因病休假半年，PPSM 支付了临时替代专家的薪酬和业务中断补偿，帮助公司平稳渡过了危机。"
+            en: {
+                nav_home: "HOME", nav_products: "PRODUCTS", nav_psb: "PROFIT SHARE", nav_eligibility: "ELIGIBILITY", nav_contact: "CONTACT",
+                hero_badge: "NZ Only Mutual for Professionals",
+                hero_title: "Mutuality is the <br><span class='pps-gold'>Unique Policy</span>",
+                hero_desc: "At PPS Mutual, you are an owner, not just a customer. We share our success with our professional members, not external shareholders.",
+                btn_explore: "EXPLORE PSB", btn_check: "CHECK ELIGIBILITY",
+                card_title: "MUTUAL ADVANTAGE",
+                adv_1: "Fully owned by professional members", adv_2: "100% of profits shared with members", adv_3: "Tailored pricing for Class 1 Professionals",
+                prod_h: "PROFESSIONAL PROTECTION", prod_p: "A modern suite of benefits built for the evolving needs of today's professionals",
+                case_study: "CASE STUDY",
+                psb_h: "Profit Share Benefit (PSB)", psb_p: "One of our most distinctive benefits. Each year, eligible members share in the financial success through their individual accounts.",
+                psb_label: "Est. Monthly Premium (NZD)", psb_chart_h: "20-Year Profit Share Growth Simulation",
+                psb_disclaimer: "Disclaimer: Based on historical allocations. Not a guarantee of future returns.",
+                eli_h: "ELIGIBILITY CHECKER", eli_p: "Based on 2025/2026 PPSM Official Guide",
+                eli_step1: "1. Select Your Background", eli_step2: "2. Residency Status",
+                opt_none: "-- SELECT --", opt_med: "Medical / Health Professionals", opt_leg: "Legal Professionals", opt_fin: "Accounting & Actuarial", opt_eng: "Engineering & Architecture", opt_uni: "4-Year Degree (THE Ranked)",
+                opt_yes: "YES", opt_no: "NO",
+                eli_init_h: "Waiting for check...", eli_init_p: "Please select your profession and residency status above",
+                uni_link: "Verify your university on THE World Rankings 2026",
+                contact_h: "GET EXPERT ADVICE", footer_legal: "© 2026 PPS Mutual. For Accredited Adviser Use Only. Mutuality is the Unique Policy."
             }
         };
 
-        function switchProduct(id) {
-            const tabs = ['life', 'tpd', 'income', 'key'];
-            tabs.forEach(t => {
-                document.getElementById('btn-' + t).classList.remove('tab-active');
-            });
-            document.getElementById('btn-' + id).classList.add('tab-active');
+        const productData = {
+            life: {
+                zh: { title: "人寿保障 (Life Cover)", desc: "为家人和事业建立后盾。在不幸发生时提供一次性赔付。", features: ["$15k 丧葬费预付", "涵盖末期疾病", "心理咨询费用报销"], case: "Michael去世后，理赔款让 Sarah 能够专注照顾孩子，无需担忧房贷压力。" },
+                en: { title: "Life Cover", desc: "Lump sum financial protection for loved ones or business partners.", features: ["$15k Bereavement Support", "Terminal Illness included", "Counselling Benefit"], case: "After Michael's death, Sarah was able to focus on the children while PPSM covered mortgage and living costs." }
+            },
+            tpd: {
+                zh: { title: "全残保障 (TPD Cover)", desc: "因伤病永久丧失工作能力时，提供资金用于医疗改造或清偿房贷。", features: ["职业技能再培训支持", "$10k 辅具补贴", "Own Occupation 定义"], case: "外科医生 Jordan 在车祸中失去右手功能，TPD 赔款让他能顺利转型医学教育。" },
+                en: { title: "Total & Permanent Disability", desc: "Support when injury or illness means you can no longer work permanently.", features: ["Vocational Retraining", "$10k Home Modification", "Own Occupation Definition"], case: "Surgeon Jordan lost use of his hand. TPD allowed him to pay off debts and retrain for research." }
+            },
+            income: {
+                zh: { title: "收入保障 (Income Protection)", desc: "保障您的赚钱能力。相比 ACC，我们覆盖癌症、心脏病等疾病停工。", features: ["等待期灵活可选", "复工奖励计划", "保额自动随通胀调整"], case: "会计师因心理健康原因需长期休假，PPSM 每月支付 75% 薪资补偿直到康复。" },
+                en: { title: "Income Protection", desc: "Replaces lost income due to illness or injury. Covers more than just accidents.", features: ["Flexible Waiting Periods", "Return to Work Benefit", "Inflation Adjustment"], case: "An accountant unable to work due to mental health received regular payments during recovery." }
+            },
+            key: {
+                zh: { title: "关键人物 (Key Person)", desc: "保护企业生命线。资助招聘、搬迁及业务中断损失。", features: ["招聘补偿金", "康复与复工支持", "旺季收入增益补偿"], case: "合伙人因病缺位，KP 保障资助了临时专家的招聘费用，确保诊所平稳运转。" },
+                en: { title: "Key Person Protector", desc: "Safeguard business cash flow when a key person is unable to work.", features: ["Recruitment Support", "Rehabilitation & Relocation", "Peak Season Booster"], case: "When a law firm partner was absent, KP funded a temporary replacement to maintain revenue." }
+            }
+        };
 
+        let currentLang = 'zh';
+        let currentProd = 'life';
+
+        // --- 核心翻译逻辑 ---
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // 按钮样式
+            document.getElementById('lang-zh').className = lang === 'zh' ? 'px-3 py-1 bg-pps-gold text-pps-navy' : 'px-3 py-1 hover:bg-white/10';
+            document.getElementById('lang-en').className = lang === 'en' ? 'px-3 py-1 bg-pps-gold text-pps-navy' : 'px-3 py-1 hover:bg-white/10';
+
+            // 文本内容
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+            });
+
+            document.getElementById('hero-title').innerHTML = i18n[lang].hero_title;
+            document.getElementById('hero-desc').innerHTML = i18n[lang].hero_desc;
+
+            // 更新产品和准入状态
+            switchProduct(currentProd);
+            checkStatus();
+        }
+
+        function switchProduct(id) {
+            currentProd = id;
+            const tabs = ['life', 'tpd', 'income', 'key'];
+            tabs.forEach(t => document.getElementById('tab-' + t).className = t === id ? 'px-6 py-2 text-[10px] font-bold uppercase tracking-widest tab-active' : 'px-6 py-2 text-[10px] font-bold uppercase tracking-widest');
+
+            const data = productData[id][currentLang];
             const content = document.getElementById('p-content');
-            gsap.to(content, { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
-                document.getElementById('p-title').innerText = productData[id].title;
-                document.getElementById('p-desc').innerText = productData[id].desc;
-                document.getElementById('p-case').innerText = productData[id].case;
-                gsap.to(content, { opacity: 1, y: 0, duration: 0.5 });
+            
+            gsap.to(content, { opacity: 0, x: -10, duration: 0.2, onComplete: () => {
+                document.getElementById('p-title').innerText = data.title;
+                document.getElementById('p-desc').innerText = data.desc;
+                document.getElementById('p-case').innerText = `"${data.case}"`;
+                
+                const featureList = document.getElementById('p-features');
+                featureList.innerHTML = '';
+                data.features.forEach(f => {
+                    const li = document.createElement('li');
+                    li.className = "flex items-center space-x-2";
+                    li.innerHTML = `<span class="text-pps-gold">✓</span><span>${f}</span>`;
+                    featureList.appendChild(li);
+                });
+                gsap.to(content, { opacity: 1, x: 0, duration: 0.4 });
             }});
         }
 
-        // PSB 模拟图表
+        // --- 计算器逻辑 ---
         let psbChart;
         function initChart() {
             const ctx = document.getElementById('psbChart').getContext('2d');
             psbChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['第1年', '第5年', '第10年', '第15年', '第20年'],
+                    labels: ['Yr 1', 'Yr 5', 'Yr 10', 'Yr 15', 'Yr 20'],
                     datasets: [{
-                        label: '预估 PSB 账户价值',
-                        data: [0, 15000, 45000, 95000, 180000],
+                        label: 'Est. PSB Value',
+                        data: [0, 15000, 48000, 105000, 210000],
                         borderColor: '#C5A059',
                         backgroundColor: 'rgba(197, 160, 89, 0.1)',
-                        fill: true,
-                        tension: 0.4
+                        fill: true, tension: 0.4, borderWidth: 3, pointRadius: 5
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } }
+                    scales: { y: { display: false }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
                 }
             });
         }
@@ -360,14 +403,12 @@
         function updateChart() {
             const val = document.getElementById('premiumRange').value;
             document.getElementById('premiumValue').innerText = '$' + val;
-            
-            // 简单模拟增长：PSB 分配约为保费的 15%-25%，加上复合增长
-            const newData = [0, val * 12 * 5 * 0.2, val * 12 * 10 * 0.25, val * 12 * 15 * 0.35, val * 12 * 20 * 0.45];
+            const newData = [0, val * 35, val * 95, val * 210, val * 450];
             psbChart.data.datasets[0].data = newData;
             psbChart.update();
         }
 
-        // 准入逻辑
+        // --- 准入逻辑 ---
         function checkStatus() {
             const prof = document.getElementById('prof-select').value;
             const res = document.querySelector('input[name="res"]:checked').value;
@@ -379,23 +420,24 @@
             if (!prof) return;
 
             if (res === 'no') {
-                box.className = "mt-12 p-8 rounded-2xl bg-red-50 border border-red-200 text-center";
+                box.className = "p-8 rounded-2xl bg-red-50 border border-red-100 text-center";
                 icon.innerHTML = '<i class="fas fa-times-circle text-red-500"></i>';
-                title.innerText = "暂不符合加入条件";
-                title.className = "text-xl font-bold mb-2 text-red-700";
-                text.innerText = "PPS Mutual 目前仅限新西兰公民或持有居民类签证的人士申请。";
+                title.innerText = currentLang === 'zh' ? "暂不符合条件" : "NOT ELIGIBLE YET";
+                text.innerText = currentLang === 'zh' ? "目前仅限新西兰公民或持有居民类签证的人士。" : "Currently restricted to NZ Citizens or Resident Visa holders.";
             } else {
-                box.className = "mt-12 p-8 rounded-2xl bg-green-50 border border-green-200 text-center";
+                box.className = "p-8 rounded-2xl bg-green-50 border border-green-100 text-center";
                 icon.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
-                title.innerText = "恭喜！您很有可能符合条件";
-                title.className = "text-xl font-bold mb-2 text-green-700";
-                text.innerText = "您的专业领域在我们的承保名录中。建议咨询 Caroline 获取详细的准入审核。";
+                title.innerText = currentLang === 'zh' ? "符合准入条件" : "YOU ARE ELIGIBLE";
+                text.innerText = currentLang === 'zh' ? "您的专业背景符合指南要求。建议立即预约详情审核。" : "Your background meets the criteria. Contact us for formal verification.";
             }
         }
 
-        window.onload = function() {
+        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+
+        window.onload = () => {
             initChart();
-            gsap.from("#home h1", { opacity: 0, y: 30, duration: 1, delay: 0.3 });
+            setLanguage('zh');
+            gsap.from("#home h1", { opacity: 0, y: 30, duration: 1 });
         };
     </script>
 </body>
